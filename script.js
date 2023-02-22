@@ -52,8 +52,10 @@ const b_text = document.getElementById('b_text')
 const c_text = document.getElementById('c_text')
 const d_text = document.getElementById('d_text')
 const submitBtn = document.getElementById('submit')
+const myQuizApp = document.getElementById('quiz')
 
 var currentNumber = 0;
+var score = 0;
 
 loadQuiz(quizData);
 
@@ -85,16 +87,23 @@ function getSelected() {
 submitBtn.addEventListener('click', () => {
     const currentQuizData = quizData[currentNumber];
     const answer = getSelected()
+    
 
     console.log(answer)
-     if (answer  === currentQuizData.correct){
-         if (currentNumber < quizData.length) {
-             currentNumber++
-             loadQuiz(quizData);
-         }else{
-             currentNumber = 0
-         }
+     if (answer){
+      if(answer  === currentQuizData.correct){
+         score++
      }
+     currentNumber++
+     if (currentNumber < quizData.length) {
+        loadQuiz(quizData);
+    }else if (currentNumber == quizData.length){
+        myQuizApp.innerHTML = `
+        <h2> You have answered correctly at ${score}/${quizData.length} questions, congratulations!</h2>
+        <button onClick="location.reload()"> Again </button>
+        `
+    }
+    }
 
 
 });
